@@ -1,0 +1,43 @@
+import java.util.Scanner;
+public class Main {  
+    public static double f(double x) {
+        return Math.pow(x, 3) - x - 2;
+    }  
+    public static double phi(double x) {
+        return Math.cbrt(x + 2);
+    }
+    public static double simpleIteration(double x0, double eps, int maxIter) {
+        double xPrev = x0;
+        double xCurr;
+        int iter = 0;
+        System.out.printf("Начальное приближение: x0 = %.6f%n", x0);
+        System.out.printf("Точность: eps = %.6f%n", eps);
+        System.out.printf("Максимум итераций: %d%n", maxIter);
+        while (iter < maxIter) {
+            xCurr = phi(xPrev);
+            iter++;
+            System.out.printf("Итерация %d: x = %.10f, |x - x_prev| = %.10f%n",
+                    iter, xCurr, Math.abs(xCurr - xPrev));
+
+            if (Math.abs(xCurr - xPrev) < eps) {
+                System.out.printf("Точность достигнута за %d итераций.%n", iter);
+                return xCurr;
+            }
+            xPrev = xCurr;
+        }
+        System.out.printf("Достигнуто максимальное число итераций (%d).%n", maxIter);
+        return xPrev;
+    }
+    public static void main(String[] args) {     
+        double a = 1.0;       
+        double b = 2.0;      
+        double eps = 0.0001; 
+        double x0 = 1.0;     
+        int n = 10;  
+        System.out.println("Отрезок: [" + a + "; " + b + "]");
+        System.out.println("Значение f(a) = " + f(a));
+        System.out.println("Значение f(b) = " + f(b)); 
+        double root = simpleIteration(x0, eps, n);     
+        System.out.printf("Приближённый корень: x = %.6f%n", root);
+    }
+}
